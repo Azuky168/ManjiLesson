@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f1115"><title>ManjiLesson</title>
+<style>
+:root{--bg:#0f1115;--cd:#1a1d24;--fg:#f2f3f5;--mu:#8b92a1;--ac:#7ee081;--bd:#2a2e38;--er:#ff5d5d}
+[data-t=light]{--bg:#f4f4f1;--cd:#fff;--fg:#16181d;--mu:#6b7280;--ac:#2f9e44;--bd:#e2e2dc}
+[data-t=tokyo]{--bg:#1a1b26;--cd:#24283b;--fg:#c0caf5;--mu:#7982a9;--ac:#7aa2f7;--bd:#3b4261}
+[data-t=sakura]{--bg:#fff1f4;--cd:#fff;--fg:#4a2433;--mu:#a2677b;--ac:#e8638b;--bd:#f6d3dd}
+[data-t=custom]{--mu:color-mix(in srgb,var(--fg) 55%,var(--bg));--bd:color-mix(in srgb,var(--fg) 15%,var(--bg))}
+*{box-sizing:border-box;margin:0;font-weight:inherit}
+body{background:var(--bg);color:var(--fg);font:800 15px/1.4 Inter,"Helvetica Neue",system-ui,sans-serif;min-height:100vh}
+h1{font-size:30px;font-weight:900;letter-spacing:-.5px;margin:4px 0 14px}h2{font-size:22px;font-weight:900}
+.jp{font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;font-weight:900}
+.mu{color:var(--mu)}.big{font-size:56px;text-align:center;margin:8px 0}
+main{padding:16px 16px 96px;max-width:960px;margin:auto}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--cd);border-top:2px solid var(--bd);z-index:9;padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;padding:8px 0;background:0;border:0;color:var(--mu);font:inherit;font-size:10px;cursor:pointer}
+nav button.on{color:var(--ac)}nav .i{display:block;font-size:20px}
+@media(min-width:800px){body{padding-left:200px}nav{top:0;right:auto;width:200px;flex-direction:column;border:0;border-right:2px solid var(--bd);padding:20px 8px;gap:4px}nav button{display:flex;gap:12px;align-items:center;font-size:16px;text-align:left;padding:12px;border-radius:12px}nav button.on{background:var(--bd)}nav .i{width:26px;text-align:center}main{padding:32px}}
+.c{background:var(--cd);border:2px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:12px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.btn{font:inherit;font-weight:800;background:var(--cd);color:var(--fg);border:2px solid var(--bd);border-radius:12px;padding:10px 14px;cursor:pointer}
+.btn.p{background:var(--ac);color:var(--bg);border-color:var(--ac)}.btn.s{padding:4px 10px;font-size:13px}
+.opt{flex:1 1 40%;font-size:18px}.opt.g{background:var(--ac);color:var(--bg)}.opt.r{background:var(--er);color:#fff}
+.in{width:100%;font:inherit;padding:12px;border-radius:12px;border:2px solid var(--bd);background:var(--bg);color:var(--fg);margin:8px 0}
+.bar{height:10px;background:var(--bd);border-radius:9px;overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;background:var(--ac)}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}.g3 .c{margin:0}
+.gr{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:8px}
+.k{background:var(--cd);color:var(--fg);border:2px solid var(--bd);border-radius:12px;padding:8px 2px;cursor:pointer;font:inherit}.k span{display:block;font-size:28px}.k small{color:var(--mu);font-size:11px}.k.kn{border-color:var(--ac)}
+.ov{position:fixed;inset:0;background:#000a;display:grid;place-items:center;z-index:99;padding:16px}.ov .c{width:min(420px,100%);margin:0}
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:var(--ac);color:var(--bg);padding:10px 18px;border-radius:12px;z-index:100}
+.st{position:relative;width:300px;height:300px;margin:8px auto;border:2px dashed var(--bd);border-radius:12px;background:linear-gradient(var(--bd),var(--bd)) center/2px 100% no-repeat,linear-gradient(var(--bd),var(--bd)) center/100% 2px no-repeat}
+.st canvas{position:absolute;inset:0;touch-action:none;cursor:crosshair}.gh{position:absolute;inset:0;display:grid;place-items:center;font-size:230px;opacity:.13;pointer-events:none;font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;font-weight:900}
+.ms{height:300px;overflow:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:8px}.m{max-width:82%;padding:8px 12px;border-radius:14px;background:var(--bd)}.m.u{align-self:flex-end;background:var(--ac);color:var(--bg)}.m button{background:0;border:0;color:inherit;cursor:pointer;font:inherit}
+.wd{width:150px;height:150px;border-radius:28px;background:var(--ac);color:var(--bg);display:grid;place-items:center;text-align:center;margin:10px 0;transition:.25s}.wd.l{width:100%;height:96px}
+.ar{position:relative;height:380px;overflow:hidden;border:2px solid var(--bd);border-radius:16px;background:var(--cd);margin-bottom:8px}
+.fl{position:absolute;top:0;font-size:34px;padding:4px 10px;background:var(--bg);border:2px solid var(--ac);border-radius:12px}
+.pop{opacity:0!important;scale:1.7;transition:.2s}.imp{position:absolute;bottom:0;width:64px;height:64px;margin-left:-6px;border-radius:50%;border:4px solid var(--er);animation:im .5s forwards}
+.go{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-size:28px;font-weight:900}
+@keyframes im{to{transform:scale(2.6);opacity:0}}
+@keyframes sh{20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+@keyframes pu{50%{transform:scale(1.04);box-shadow:0 0 0 14px color-mix(in srgb,var(--ac) 30%,transparent)}}
+.ko{animation:sh .4s;border-color:var(--er)!important}.ok{animation:pu .6s;border-color:var(--ac)!important}
+.hit{animation:sh .4s;box-shadow:inset 0 0 50px var(--er)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style></head><body><nav></nav><main></main>
+<script>
+const $=s=>document.querySelector(s),M=$('main'),pick=a=>a[Math.random()*a.length|0],shuf=a=>[...a].sort(()=>Math.random()-.5);
+const h=(t,c,x,f)=>{let e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;if(f)e.onclick=f;return e};
+let S=JSON.parse(localStorage.ml||'null')||{c:null,p:{},s:{th:'dark',em:1,sp:0,cu:{bg:'#101820',cd:'#1b2733',fg:'#ffffff',ac:'#ffb703'}}};
+const save=()=>localStorage.ml=JSON.stringify(S),P=()=>S.p[S.c],ic=(e,s)=>S.s.em?e:s;
+const HG="あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん",
+HR="a i u e o ka ki ku ke ko sa shi su se so ta chi tsu te to na ni nu ne no ha hi fu he ho ma mi mu me mo ya yu yo ra ri ru re ro wa wo n".split(" "),
+VD="がぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽ",VR="ga gi gu ge go za ji zu ze zo da ji zu de do ba bi bu be bo pa pi pu pe po".split(" ");
+const KJ=[["日","jour, soleil","nichi/hi"],["月","lune, mois","getsu/tsuki"],["火","feu","ka/hi"],["水","eau","sui/mizu"],["木","arbre","moku/ki"],["金","or, argent","kin/kane"],["土","terre","do/tsuchi"],["人","personne","jin/hito"],["山","montagne","san/yama"],["川","rivière","sen/kawa"],["大","grand","dai/okii"],["小","petit","sho/chiisai"],["中","milieu","chu/naka"],["口","bouche","ko/kuchi"],["目","œil","moku/me"],["手","main","shu/te"],["本","livre","hon"],["犬","chien","ken/inu"],["子","enfant","shi/ko"],["上","dessus","jo/ue"]];
+const W=[["こんにちは","bonjour","konnichiwa"],["ありがとう","merci","arigato"],["さようなら","au revoir","sayonara"],["すし","sushi","sushi"],["みず","eau","mizu"],["ねこ","chat","neko"],["いぬ","chien","inu"],["さくら","cerisier","sakura"],["やま","montagne","yama"],["ほん","livre","hon"],["ともだち","ami","tomodachi"],["おいしい","délicieux","oishii"],["たべる","manger","taberu"],["のむ","boire","nomu"],["がっこう","école","gakko"],["せんせい","professeur","sensei"],["ゆき","neige","yuki"],["うみ","mer","umi"],["そら","ciel","sora"],["はな","fleur","hana"]];
+const PH=[["おはようございます","Bonjour (matin)","ohayo gozaimasu"],["いただきます","Bon appétit","itadakimasu"],["ただいま","Je suis rentré","tadaima"],["おつかれさま","Merci pour ton travail","otsukaresama"],["はじめまして","Enchanté","hajimemashite"],["すみません","Excusez-moi","sumimasen"]];
+const CU=[["Villes","Tokyo","Capitale d'une agglomération de plus de 37 millions d'habitants, entre gratte-ciels, temples, Shibuya et Asakusa."],["Villes","Kyoto","Capitale impériale de 794 à 1868, célèbre pour ses temples, ses geishas et ses jardins zen."],["Villes","Osaka","Capitale gourmande du Kansai, réputée pour le takoyaki, l'okonomiyaki et son château."],["Villes","Hiroshima","Ville-symbole de paix avec le Dôme de Genbaku, proche de l'île sacrée de Miyajima."],["Régions","Hokkaidō","Île du nord : hivers enneigés, festival de la neige de Sapporo, ramen au miso et champs de lavande."],["Régions","Okinawa","Archipel subtropical, ancien royaume Ryūkyū, berceau du karaté."],["Régions","Kansai","Région d'Osaka, Kyoto et Nara : berceau de l'histoire et de la culture traditionnelle."],["Gastronomie","Sushi","Riz vinaigré garni de poisson cru ou d'autres ingrédients ; les nigiri se mangent souvent avec les doigts."],["Gastronomie","Ramen","Nouilles en bouillon (shoyu, miso, shio ou tonkotsu), inspirées de la cuisine chinoise."],["Gastronomie","Mochi","Gâteau de riz gluant pilé, mangé notamment au Nouvel An."],["Gastronomie","Matcha","Thé vert en poudre fouetté, au cœur de la cérémonie du thé (chanoyu)."],["Traditions","Hanami","Contemplation des cerisiers en fleurs au printemps, en pique-niquant sous les arbres."],["Traditions","Onsen","Bains thermaux naturels : on se lave avant d'entrer, et on s'y baigne sans maillot."],["Traditions","Kimono","Vêtement traditionnel en T, noué par un obi, porté lors de cérémonies et de festivals."],["Traditions","Matsuri","Festivals shinto avec processions de mikoshi, stands et feux d'artifice, surtout l'été."]];
+const SETS={h:[...HG].map((c,i)=>[c,HR[i],HR[i],'h']),k:[...HG].map((c,i)=>[String.fromCharCode(c.charCodeAt(0)+96),HR[i],HR[i],'k']),j:KJ.map(x=>[...x,'j']),w:W.map(x=>[...x,'w'])};
+const pool=s=>s=='x'?[...SETS.h,...SETS.k,...SETS.j,...SETS.w]:SETS[s],DICT=[...W,...PH];
+const say=(t,l='ja-JP')=>{try{speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang=l;u.rate=.8;speechSynthesis.speak(u)}catch(e){}};
+function rom(s){let o='',g=[...s].map(c=>{let n=c.charCodeAt(0);return n>0x30A0&&n<0x30F7?String.fromCharCode(n-96):c}),f=c=>{let j=HG.indexOf(c);return j>=0?HR[j]:(j=VD.indexOf(c))>=0?VR[j]:null};
+for(let i=0;i<g.length;i++){let c=g[i];if(c=='っ'){o+=(f(g[i+1])||' ')[0];continue}
+if('ゃゅょ'.includes(c)&&o){let y={'ゃ':'a','ゅ':'u','ょ':'o'}[c];o=/(sh|ch|j)i$/.test(o)?o.slice(0,-1)+y:o.slice(0,-1)+'y'+y;continue}
+o+=f(c)??(c=='ー'?'':c)}return o}
+const td=()=>new Date().toLocaleDateString('sv'),df=(a,b)=>Math.round((new Date(a)-new Date(b))/864e5);
+function toast(t){let e=h('div','toast',t);document.body.append(e);setTimeout(()=>e.remove(),2500)}
+function chk(){let p=P();if(p.la&&p.la!=td()){let d=df(td(),p.la);if(d>1){if(p.fz>=d-1){p.fz-=d-1;p.la=new Date(Date.now()-864e5).toLocaleDateString('sv');toast('Gel utilisé : série sauvée')}else p.st=0}}save()}
+function gain(x){let p=P();p.xp+=x;if(p.la!=td()){p.st++;p.la=td()}save()}
+function applyT(){let d=document.documentElement,s=S.s;d.dataset.t=s.th;['bg','cd','fg','ac'].forEach(k=>s.th=='custom'?d.style.setProperty('--'+k,s.cu[k]):d.style.removeProperty('--'+k))}
+function av(a,s=96){let sk=['#f6d5b8','#e8b98f','#c68a5e','#8d5a3b'][a.sk],hc=a.hc,e=a.ex,hr=a.hr;
+let sh=['M10 100q4-28 40-28t40 28z','M10 100q4-28 40-28t40 28zM50 74l-12 26h24z','M8 100q2-32 42-32t42 32z'][a.fs||0];
+return `<svg viewBox="0 0 100 100" width=${s} height=${s}><clipPath id=cp><circle cx=50 cy=50 r=50 /></clipPath><circle cx=50 cy=50 r=50 fill="var(--bd)"/><g clip-path="url(#cp)">${hr==1?`<path d="M22 50q0-34 28-34t28 34v36H64V50H36v36H22z" fill="${hc}"/>`:''}<path d="${sh}" fill="${a.ft}"/><rect x=44 y=62 width=12 height=14 fill="${sk}"/><ellipse cx=50 cy=46 rx=19 ry=22 fill="${sk}"/>
+${hr==2?`<path d="M30 42l2-22 8 10 6-14 6 14 8-10 2 22q-18-8-32 0z" fill="${hc}"/>`:`<path d="M30 44q-2-28 20-28t20 28q-8-12-20-12T30 44z" fill="${hc}"/>`}${hr==3?`<circle cx=50 cy=12 r=9 fill="${hc}"/>`:''}
+${e==2?'<path d="M38 48q3-5 6 0M56 48q3-5 6 0" stroke="#222" stroke-width=2.5 fill=none /><path d="M43 57q7 8 14 0z" fill="#a33"/>':`<circle cx=42 cy=48 r=2.4 fill="#222"/><circle cx=58 cy=48 r=2.4 fill="#222"/>`+(e==0?'<path d="M43 57q7 6 14 0" stroke="#222" stroke-width=2.5 fill=none />':'<path d="M44 58h12" stroke="#222" stroke-width=2.5 />')}
+${a.ac==1?'<g stroke="#222" stroke-width=2 fill=none><circle cx=42 cy=48 r=6.5 /><circle cx=58 cy=48 r=6.5 /><path d="M48.5 48h3"/></g>':a.ac==2?'<rect x=30 y=29 width=40 height=5 fill="#e63946"/>':a.ac==3?'<path d="M27 36q23-28 46 0z" fill="#457b9d"/><rect x=60 y=33 width=22 height=5 rx=2 fill="#457b9d"/>':''}</g></svg>`}
+const TABS=[['home','Accueil','🏠','◆'],['kana','Kana','あ','あ'],['write','Écrire','✍️','✎'],['quiz','Quiz','🎯','?'],['arc','Arcade','🎮','▼'],['chat','Parler','💬','…'],['cul','Culture','⛩️','◎'],['set','Réglages','⚙️','≡']];
+let T='home';const R={};
+function nav(){$('nav').innerHTML=TABS.map(x=>`<button class="${x[0]==T?'on':''}" onclick="go('${x[0]}')"><span class=i>${ic(x[2],x[3])}</span>${x[1]}</button>`).join('')}
+function go(t){T=t;stopArc();nav();R[t]();scrollTo(0,0)}
+function np(n){let id=Date.now().toString(36);S.p[id]={n,av:{sk:0,hr:0,hc:'#2b2b2b',ex:0,ac:0,ft:'#e8638b',fs:0},kn:{},xp:0,st:0,la:'',fz:1,hs:0,qz:{t:0,c:0}};S.c=id;save();go('home')}
+function sw(v){if(v=='+'){let n=prompt('Nom du profil ?');if(n)np(n)}else{S.c=v;save();chk();go('home')}}
+function welcome(){M.innerHTML='<h1>ManjiLesson</h1><div class=c><p>Crée ton profil pour commencer.</p><input id=wn class=in placeholder="Ton prénom"><button class="btn p" onclick="np($(\'#wn\').value||\'Moi\')">Commencer</button></div>'}
+/* ACCUEIL */
+let EO=0;
+const sa=(k,v)=>{P().av[k]=v;save();R.home()};
+R.home=()=>{let p=P(),n=k=>Object.keys(p.kn).filter(x=>x[0]==k).length,tot={h:46,k:46,j:KJ.length,w:W.length},d=Date.now(),a=p.av;
+let ED=(l,k,arr)=>`<div class=row><span>${l}</span><div class=opts>${arr.map((v,i)=>`<button class="btn s ${a[k]==i?'p':''}" onclick="sa('${k}',${i})">${v}</button>`).join('')}</div></div>`;
+let wc=(t,g,s,sp)=>`<div class=c><span class=mu>${t}</span><div class="big jp">${g}</div><div>${s}</div><button class="btn s" onclick="say('${sp}')">${ic('🔊','▶')} Écouter</button></div>`;
+let wm=W[(d/18e5|0)%W.length],pj=PH[(d/864e5|0)%PH.length],ks=SETS.j[(d/6048e5|0)%KJ.length],kd=SETS.h[(d/864e5|0)%46];
+M.innerHTML=`<div class="c row"><div>${av(a,72)}</div><div style=flex:1><h1 style=margin:0>${p.n}</h1><span class=mu>${p.xp} XP</span></div><select class=in style=width:auto onchange=sw(this.value)>${Object.keys(S.p).map(i=>`<option value=${i} ${i==S.c?'selected':''}>${S.p[i].n}</option>`).join('')}<option value=+>+ Nouveau</option></select></div>
+<button class=btn onclick="EO^=1;R.home()">Personnaliser l'avatar</button>
+${EO?`<div class=c>${ED('Peau','sk',['1','2','3','4'])}${ED('Coiffure','hr',['Court','Long','Pointes','Chignon'])}<div class=row><span>Cheveux</span><input type=color value=${a.hc} onchange="sa('hc',this.value)"></div>${ED('Expression','ex',['Sourire','Neutre','Joie'])}${ED('Accessoire','ac',['Aucun','Lunettes','Bandeau','Casquette'])}${ED('Tenue','fs',['Tee-shirt','Col V','Ample'])}<div class=row><span>Couleur tenue</span><input type=color value=${a.ft} onchange="sa('ft',this.value)"></div></div>`:''}
+<div class="g3" style="margin:12px 0"><div class=c><span class=mu>Série</span><h2>${ic('🔥','▲')} ${p.st} j</h2></div><div class=c><span class=mu>Gels</span><h2>${ic('🧊','❄')} ${p.fz}</h2><button class="btn s" onclick="bz()">Acheter (40 XP)</button></div></div>
+<h2>Progression</h2><div class=g3 style=margin:8px 0>${[['h','Hiragana'],['k','Katakana'],['j','Kanji'],['w','Mots']].map(([k,l])=>`<div class=c><div class=row><b>${l}</b><span>${n(k)}/${tot[k]}</span></div><div class=bar><i style="width:${n(k)/tot[k]*100}%"></i></div></div>`).join('')}</div>
+<h2>À apprendre</h2><div class=g3 style=margin:8px 0>${wc('Mot du moment',wm[0],wm[2]+' = '+wm[1],wm[0])}${wc('Phrase du jour',pj[0],pj[2]+' = '+pj[1],pj[0])}${wc('Kanji de la semaine',ks[0],ks[2]+' = '+ks[1],ks[0])}</div>
+<div class=c><b>Widget écran d'accueil</b><div id=wd class=wd><div><div class="big jp" style=margin:0>${kd[0]}</div>${ic('🔥','▲')} ${p.st} j</div></div><button class="btn s" onclick="$('#wd').classList.toggle('l')">Changer la taille</button> <button class="btn s" onclick="alert('Sur mobile : menu du navigateur › Ajouter à l\\'écran d\\'accueil. Le widget montre le kana du jour et ta série.')">Ajouter</button></div>`}
+function bz(){let p=P();if(p.xp<40)return toast('Il faut 40 XP');p.xp-=40;p.fz++;save();R.home()}
+/* KANA */
+let KS='h';
+R.kana=()=>{let p=P();M.innerHTML=`<h1>Kana & mots</h1><div class=opts>${[['h','Hiragana'],['k','Katakana'],['j','Kanji'],['w','Mots']].map(([k,l])=>`<button class="btn ${KS==k?'p':''}" onclick="KS='${k}';R.kana()">${l}</button>`).join('')}</div><div id=kd class=c>Touche un caractère pour l'écouter.</div><div class=gr>${SETS[KS].map((x,i)=>`<button class="k ${p.kn[x[3]+x[0]]?'kn':''}" onclick="kd(${i})"><span class=jp>${x[0]}</span><small>${x[1]}</small></button>`).join('')}</div>`};
+function kd(i){let x=SETS[KS][i],k=x[3]+x[0],p=P();say(x[0]);$('#kd').innerHTML=`<div class="big jp">${x[0]}</div><b>${x[1]}</b> <span class=mu>${'jw'.includes(KS)?x[2]:''}</span><br><button class="btn s" onclick="tk('${k}',${i})">${p.kn[k]?'Retirer':'Marquer appris'}</button>`}
+function tk(k,i){let p=P();p.kn[k]?delete p.kn[k]:p.kn[k]=1;save();R.kana();kd(i)}
+/* ÉCRITURE */
+let WS='h',WI=0,WG=1;
+function cells(x){let d=x.getImageData(0,0,300,300).data,a=Array(900).fill(0);for(let i=3;i<d.length;i+=4)if(d[i]>100){let p=(i-3)/4;a[(p/300/10|0)*30+((p%300)/10|0)]++}return a}
+function dil(b){let o=Array(900).fill(0);b.forEach((v,i)=>{if(v)for(let dy=-1;dy<2;dy++)for(let dx=-1;dx<2;dx++){let y=(i/30|0)+dy,x=i%30+dx;if(y>=0&&y<30&&x>=0&&x<30)o[y*30+x]=1}});return o}
+R.write=()=>{if(!WI)WI=pick(SETS[WS]);M.innerHTML=`<h1>Écriture</h1><div class=c id=wc><div class=opts>${[['h','Hiragana'],['k','Katakana'],['j','Kanji']].map(([k,l])=>`<button class="btn ${WS==k?'p':''}" onclick="WS='${k}';WI=0;R.write()">${l}</button>`).join('')}</div><p>Trace : <b>${WI[1]}</b> ${WS=='j'?'<span class=mu>('+WI[2]+')</span>':''}</p><div class=st><div class=gh style="${WG?'':'display:none'}">${WI[0]}</div><canvas id=cv width=300 height=300></canvas></div><div class=opts><button class=btn onclick=R.write()>Effacer</button><button class=btn onclick="WG^=1;$('.gh').style.display=WG?'':'none'">Filigrane</button><button class="btn p" onclick=ev()>Évaluer</button><button class=btn onclick="WI=0;R.write()">Suivant</button></div><div id=wr class=mu>Trace le caractère au doigt ou à la souris.</div></div>`;
+let c=$('#cv'),x=c.getContext('2d'),d=0;x.lineWidth=14;x.lineCap=x.lineJoin='round';x.strokeStyle=getComputedStyle(M).color;
+const pt=e=>{let r=c.getBoundingClientRect();return[(e.clientX-r.left)*300/r.width,(e.clientY-r.top)*300/r.height]};
+c.onpointerdown=e=>{d=1;c.setPointerCapture(e.pointerId);let[a,b]=pt(e);x.beginPath();x.moveTo(a,b);x.lineTo(a+.1,b);x.stroke()};
+c.onpointermove=e=>{if(!d)return;let[a,b]=pt(e);x.lineTo(a,b);x.stroke()};c.onpointerup=()=>d=0};
+function ev(){let g=document.createElement('canvas');g.width=g.height=300;let x=g.getContext('2d');x.font='900 230px "Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText(WI[0],150,158);
+let G=cells(x).map(v=>v>15),U=cells($('#cv').getContext('2d')).map(v=>v>8),gd=dil(G),ud=dil(U),gs=G.filter(Boolean).length||1,us=U.filter(Boolean).length;
+if(us<3)return $('#wr').textContent="Trace d'abord le caractère.";
+let rc=G.filter((v,i)=>v&&ud[i]).length/gs,pr=U.filter((v,i)=>v&&gd[i]).length/us,sc=Math.round(100*Math.sqrt(rc*pr)),st=sc>=80?3:sc>=65?2:sc>=45?1:0;
+if(st>=2){P().kn[WI[3]+WI[0]]=1;save()}
+$('#wr').innerHTML=`<h2>${'★'.repeat(st)+'☆'.repeat(3-st)} ${sc}/100</h2>${st>=2?'Bien tracé !':st?'Presque, recommence.':'Respecte la forme et la position.'}`;fin($('#wc'),st>=2,()=>{})}
+/* QUIZ */
+function fin(el,ok,cb){el.classList.remove('ok','ko');void el.offsetWidth;el.classList.add(ok?'ok':'ko');if(ok)gain(5);setTimeout(()=>cb(ok),ok?700:1200)}
+function mcq(el,hd,cr,opts,cb){el.innerHTML='';el.append(hd);let w=h('div','opts'),d=0;opts.forEach(o=>{let b=h('button','btn opt',o,()=>{if(d)return;d=1;let ok=o==cr;b.classList.add(ok?'g':'r');if(!ok)[...w.children].find(x=>x.textContent==cr).classList.add('g');cb(ok)});w.append(b)});el.append(w)}
+function askQ(el,ty,st,cb){let it=pick(ty=='o'?SETS.w:pool(st)),k=it[3]+it[0];el.classList.remove('ok','ko');
+const rec=ok=>{let p=P();p.qz.t++;if(ok){p.qz.c++;p.kn[k]=1}fin(el,ok,cb)};
+if(ty=='q'){mcq(el,h('div','big jp',it[0]),it[1],shuf([it,...shuf(SETS[it[3]].filter(x=>x[1]!=it[1])).slice(0,3)]).map(x=>x[1]),rec)}
+else if(ty=='r'){el.innerHTML='';let i=h('input','in'),go=()=>rec(it[2].split('/').includes(i.value.trim().toLowerCase()));i.placeholder='romaji…';i.onkeydown=e=>e.key=='Enter'&&go();el.append(h('div','big jp',it[0]),i,h('button','btn p','Valider',go));setTimeout(()=>i.focus(),50)}
+else{let ch=[...it[0]],a=[],w=h('div','big jp',''),b=h('div','opts');el.innerHTML='';const rf=()=>w.textContent=a.join('')||'…';
+shuf(ch).forEach(c=>{let bt=h('button','btn opt jp',c,()=>{if(bt.disabled)return;bt.disabled=1;a.push(c);rf();if(a.length==ch.length)rec(a.join('')==it[0])});b.append(bt)});rf();el.append(h('div','mu','Remets en ordre : '+it[1]),w,b)}}
+let Z,QC={t:'q',s:'h',n:10};
+R.quiz=()=>{let p=P(),sel=(k,o)=>`<select class=in onchange="QC.${k}=this.value">${o.map(([v,l])=>`<option value=${v} ${QC[k]==v?'selected':''}>${l}</option>`).join('')}</select>`;
+M.innerHTML=`<h1>Quiz</h1><p class=mu>Précision : ${p.qz.t?Math.round(p.qz.c/p.qz.t*100):0}% (${p.qz.t} réponses)</p><div class=c><b>Presets</b><div class=opts>${[['Rapide','q','h',5],['Kanji','q','j',10],['Mots en ordre','o','w',8],['Expert mixte','m','x',15]].map(x=>`<button class=btn onclick="qs('${x[1]}','${x[2]}',${x[3]})">${x[0]}</button>`).join('')}</div></div><div class=c><b>Personnalisé</b>${sel('t',[['q','QCM'],['r','Saisie romaji'],['o','Remise en ordre'],['m','Mixte']])}${sel('s',[['h','Hiragana'],['k','Katakana'],['j','Kanji'],['w','Mots'],['x','Tout']])}${sel('n',[['5','5 questions'],['10','10 questions'],['20','20 questions']])}<button class="btn p" onclick="qs(QC.t,QC.s,+QC.n)">Lancer</button></div>`};
+function qs(t,s,n){Z={t,s,n,i:0,ok:0};nq()}
+function nq(){if(Z.i>=Z.n){M.innerHTML=`<div class=c><h1>${Z.ok}/${Z.n}</h1><p>${Z.ok/Z.n>.7?'Excellent !':'Continue, ça vient !'}</p><div class=opts><button class="btn p" onclick="qs(Z.t,Z.s,Z.n)">Rejouer</button><button class=btn onclick=R.quiz()>Menu</button></div></div>`;return}
+M.innerHTML=`<h1>Question ${Z.i+1}/${Z.n}</h1><div class=c id=qa></div>`;askQ($('#qa'),Z.t=='m'?pick(['q','r','o']):Z.t,Z.s,ok=>{Z.ok+=ok;Z.i++;nq()})}
+function surprise(){let o=h('div','ov'),c=h('div','c');o.id='ov';o.append(c);document.body.append(o);let t=h('h2','','Évaluation surprise !'),q=h('div');c.append(t,q,h('button','btn s','Plus tard',()=>o.remove()));askQ(q,pick(['q','r','o']),'x',()=>o.remove())}
+setInterval(()=>{if(S.s.sp&&S.c&&!document.hidden&&!$('#ov')&&T!='arc'&&T!='quiz')surprise()},120000);
+/* ARCADE */
+let A=null;
+function stopArc(){if(A){cancelAnimationFrame(A.f);A=null}}
+R.arc=()=>{M.innerHTML=`<h1>Syllable Drop</h1><div class="c row"><span id=hp></span><span id=sc>Score 0</span><span id=cb></span><span class=mu>Record ${P().hs}</span></div><div id=ar class=ar><div class=go>Tape le romaji des kana<br>avant qu'ils tombent</div></div><input id=ai class=in placeholder="romaji… (Entrée pour valider)" autocomplete=off autocapitalize=off><button class="btn p" onclick=arcGo()>Jouer</button>`;$('#ai').oninput=e=>arcIn();$('#ai').onkeydown=e=>e.key=='Enter'&&arcIn(1)};
+const hud=()=>{$('#hp').textContent=ic('❤️','♥').repeat(A.hp);$('#sc').textContent='Score '+A.sc;$('#cb').textContent=A.cb>1?'Combo ×'+A.cb:''};
+function arcGo(){stopArc();$('#ar').innerHTML='';A={hp:5,sc:0,cb:0,it:[],nx:0,last:performance.now()};hud();$('#ai').focus();A.f=requestAnimationFrame(arcLoop)}
+function arcLoop(t){if(!A)return;let ar=$('#ar'),dt=Math.min(50,t-A.last);A.last=t;A.nx-=dt;
+if(A.nx<=0){let it=pick(SETS.h.concat(SETS.k)),el=h('div','fl jp',it[0]);el.style.left=Math.random()*(ar.clientWidth-60)+'px';ar.append(el);A.it.push({el,y:-50,r:it[1]});A.nx=Math.max(550,1600-A.sc*3)}
+for(let o of [...A.it]){o.y+=.055*dt*(1+A.sc/400);o.el.style.transform=`translateY(${o.y}px)`;if(o.y>ar.clientHeight-48){miss(o,ar);if(!A)return}}
+A.f=requestAnimationFrame(arcLoop)}
+function miss(o,ar){A.it=A.it.filter(x=>x!=o);o.el.remove();A.hp--;A.cb=0;let im=h('div','imp');im.style.left=o.el.style.left;ar.append(im);setTimeout(()=>im.remove(),500);ar.classList.remove('hit');void ar.offsetWidth;ar.classList.add('hit');if(A.hp<=0){let s=A.sc,p=P();if(s>p.hs)p.hs=s;gain(s/5|0);stopArc();ar.innerHTML=`<div class=go>Game Over<br>${s} pts</div>`;return}hud()}
+function arcIn(f){if(!A)return;let i=$('#ai'),v=i.value.trim().toLowerCase();if(!v)return;let c=A.it.filter(x=>x.r==v);
+if(!c.length){if(f){A.cb=0;i.value='';hud();let ar=$('#ar');ar.classList.remove('hit');void ar.offsetWidth;ar.classList.add('hit')}return}
+if(!f&&A.it.some(x=>x.r!=v&&x.r.startsWith(v)))return;let o=c.sort((a,b)=>b.y-a.y)[0];o.el.classList.add('pop');setTimeout(()=>o.el.remove(),200);A.it=A.it.filter(x=>x!=o);A.cb++;A.sc+=10*(1+(A.cb/5|0));i.value='';hud()}
+/* PARLER & TRADUIRE */
+let CH=[['b','こんにちは ! Je suis Sensei Bot (tuteur hors ligne). Demande « comment dit-on merci », ou tape « quiz ».','こんにちは']],CT='c',ML='ja-JP',TD='fr|ja';
+const lk=q=>{q=q.trim().toLowerCase();return DICT.find(d=>d[1].toLowerCase()==q||d[2]==q||d[0]==q||(q.length>2&&d[1].toLowerCase().split(/[ ,]/).includes(q)))};
+function bot(t){let l=t.toLowerCase(),m,d;
+if(/bonjour|salut|hello|こんにちは/.test(l))return['こんにちは ! (konnichiwa) Quel mot veux-tu apprendre ?','こんにちは'];
+if(/merci|ありがとう/.test(l))return['どういたしまして (do itashimashite) : de rien !','どういたしまして'];
+if(m=l.match(/(?:dit|dire)[- ]on (.+?)\??$/)){d=lk(m[1]);return d?[`${m[1]} = ${d[0]} (${d[2]})`,d[0]]:['Mot inconnu du dictionnaire local. Essaie l\'onglet Traducteur.']}
+if(/hiragana|katakana|kanji/.test(l))return['Hiragana : sons japonais. Katakana : mots étrangers. Kanji : idéogrammes porteurs de sens. Commence par les 46 hiragana !'];
+if(/quiz|exercice|entra|apprendre/.test(l)){let w=pick(W);return[`Répète après moi : ${w[0]} (${w[2]}) = ${w[1]}`,w[0]]}
+if(d=lk(l))return[`${d[0]} (${d[2]}) = ${d[1]}`,d[0]];
+if(/[\u3040-\u30ff\u4e00-\u9fff]/.test(t))return['いいですね ! Très bien, continue en japonais !'];
+return['Je suis un tuteur hors ligne : demande « comment dit-on … » ou tape « quiz ».']}
+function mic(l,cb){let R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return toast('Micro non supporté par ce navigateur');let r=new R();r.lang=l;r.onresult=e=>cb(e.results[0][0].transcript);r.onerror=()=>toast('Micro indisponible');r.start();toast('Je t\'écoute…')}
+function mshow(){let b=$('#ms');b.innerHTML='';CH.forEach(m=>{let e=h('div','m '+m[0],m[1]);if(m[2])e.append(h('button','',' '+ic('🔊','▶'),()=>say(m[2])));b.append(e)});b.scrollTop=1e5}
+function send(){let i=$('#ci'),t=i.value.trim();if(!t)return;i.value='';CH.push(['u',t]);let r=bot(t);CH.push(['b',...r]);mshow();if(r[1])say(r[1])}
+async function tr(){let q=$('#ti').value.trim();if(!q)return;let o=$('#to'),fr=TD=='fr|ja',d=lk(q),res;o.textContent='…';
+if(d)res=fr?d[0]:d[1];else try{let r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(q)+'&langpair='+TD);res=(await r.json()).responseData.translatedText}catch(e){o.textContent='Hors ligne : mot absent du dictionnaire local.';return}
+let jp=fr?res:q;o.innerHTML='';o.append(h('div','big jp',res));if(/[\u3040-\u30ff\u4e00-\u9fff]/.test(jp))o.append(h('div','mu',(d?d[2]:rom(jp))+(/[\u4e00-\u9fff]/.test(jp)&&!d?' (kanji non romanisés)':'')),h('button','btn',ic('🔊','▶')+' Écouter',()=>say(jp)))}
+R.chat=()=>{M.innerHTML=`<h1>Parler</h1><div class=opts><button class="btn ${CT=='c'?'p':''}" onclick="CT='c';R.chat()">Chat tuteur</button><button class="btn ${CT=='t'?'p':''}" onclick="CT='t';R.chat()">Traducteur</button></div>`+(CT=='c'?`<div class=c><div id=ms class=ms></div><div class=opts><button class="btn s ${ML=='ja-JP'?'p':''}" onclick="ML='ja-JP';R.chat()">Micro JP</button><button class="btn s ${ML=='fr-FR'?'p':''}" onclick="ML='fr-FR';R.chat()">Micro FR</button></div><div class=row><input id=ci class=in style=margin:0 placeholder="Écris ou parle…"><button class=btn onclick="mic(ML,t=>{$('#ci').value=t;send()})">${ic('🎤','●')}</button><button class="btn p" onclick=send()>OK</button></div></div>`:`<div class=c><div class=row><b>${TD=='fr|ja'?'Français → 日本語':'日本語 → Français'}</b><button class="btn s" onclick="TD=TD=='fr|ja'?'ja|fr':'fr|ja';R.chat()">⇄ Inverser</button></div><textarea id=ti class=in rows=3 placeholder="Texte à traduire"></textarea><div class=opts><button class="btn p" onclick=tr()>Traduire</button><button class=btn onclick="mic(TD=='fr|ja'?'fr-FR':'ja-JP',t=>{$('#ti').value=t;tr()})">${ic('🎤','●')} Dicter</button></div><div id=to></div><p class=mu style=font-size:12px>Dictionnaire local d'abord, puis service en ligne MyMemory (connexion requise).</p></div>`);
+if(CT=='c'){mshow();$('#ci').onkeydown=e=>e.key=='Enter'&&send()}};
+/* CULTURE */
+let CF='Tout';
+R.cul=()=>{M.innerHTML=`<h1>Culture du Japon</h1><div class=opts>${['Tout','Villes','Régions','Gastronomie','Traditions'].map(k=>`<button class="btn ${CF==k?'p':''}" onclick="CF='${k}';R.cul()">${k}</button>`).join('')}<button class="btn p" onclick=cqz()>Quiz culturel</button></div><div class=g3>${CU.filter(x=>CF=='Tout'||x[0]==CF).map(x=>`<div class=c><span class=mu>${x[0]}</span><h2 class=jp>${x[1]}</h2><p>${x[2]}</p></div>`).join('')}</div>`};
+function cqz(){M.innerHTML='<h1>Quiz culturel</h1><div class=c id=qa></div><button class=btn onclick=R.cul()>Retour</button>';nc()}
+function nc(){let el=$('#qa'),e=pick(CU);el.classList.remove('ok','ko');mcq(el,h('p','',e[2].split(e[1]).join('___')),e[1],shuf([e,...shuf(CU.filter(x=>x!=e)).slice(0,3)]).map(x=>x[1]),ok=>fin(el,ok,nc))}
+/* RÉGLAGES */
+const st=k=>{S.s.th=k;save();applyT();R.set()},cc=(k,v)=>{S.s.cu[k]=v;applyT();save()},tg=k=>{S.s[k]^=1;save();nav();R.set()};
+function rs(k){if(!confirm('Confirmer la réinitialisation ?'))return;let p=P();if(k=='kn')p.kn={};if(k=='qz')p.qz={t:0,c:0};if(k=='hs')p.hs=0;if(k=='st'){p.st=0;p.la='';p.fz=1;p.xp=0}
+if(k=='pf'){delete S.p[S.c];S.c=Object.keys(S.p)[0]||null;save();return S.c?go('home'):welcome()}if(k=='all'){localStorage.removeItem('ml');location.reload();return}save();R.set()}
+R.set=()=>{let s=S.s,c=s.cu;M.innerHTML=`<h1>Réglages</h1><div class=c><b>Thème</b><div class=opts>${[['dark','Sombre'],['light','Clair'],['tokyo','Tokyo Night'],['sakura','Sakura'],['custom','Perso']].map(([k,l])=>`<button class="btn ${s.th==k?'p':''}" onclick="st('${k}')">${l}</button>`).join('')}</div>${s.th=='custom'?['bg','cd','fg','ac'].map(k=>`<label class=row>${{bg:'Fond',cd:'Cartes',fg:'Texte',ac:'Accent'}[k]}<input type=color value=${c[k]} oninput="cc('${k}',this.value)"></label>`).join(''):''}</div>
+<div class=c><b>Options</b><div class=opts><button class="btn ${s.em?'p':''}" onclick="tg('em')">Emojis : ${s.em?'ON':'OFF'}</button><button class="btn ${s.sp?'p':''}" onclick="tg('sp')">Évaluations surprises : ${s.sp?'ON':'OFF'}</button></div></div>
+<div class=c><b>Réinitialiser</b><div class=opts>${[['kn','Progression (kana, kanji, mots)'],['qz','Stats du quiz'],['hs','Record arcade'],['st','Série & XP'],['pf','Supprimer ce profil'],['all','Tout effacer']].map(x=>`<button class=btn onclick="rs('${x[0]}')">${x[1]}</button>`).join('')}</div></div>`};
+/* DÉMARRAGE */
+applyT();nav();if(!S.c||!S.p[S.c])welcome();else{chk();go('home')}
+</script></body></html>
